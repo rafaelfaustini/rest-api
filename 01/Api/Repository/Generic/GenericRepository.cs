@@ -1,86 +1,87 @@
-﻿using Api.Model;
+﻿using Api.Model.Base;
 using Api.Model.Context;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
-namespace Api.Repository.Implementations
+namespace Api.Repository.Generic
 {
-    public class UserRepositoryImplementation : IUserRepository
+    public class GenericRepository<T> : IRepository<T> where T : BaseEntity
     {
         private MySQLContext _context;
 
-        public UserRepositoryImplementation(MySQLContext context)
+        private DbSet<T> dataset;
+
+        public GenericRepository(MySQLContext context)
         {
             _context = context;
-        }
-        public List<User> FindAll()
-        {
-            return _context.Users.ToList();
+            dataset = _context.Set<T>();
         }
 
-        public User FindByID(long id)
+
+
+        public List<T> FindAll()
         {
-            return _context.Users.SingleOrDefault(u => u.Id.Equals(id));
+            return dataset.ToList();
         }
-        public User Create(User user)
+
+        public T FindByID(long id)
+        {
+            return dataset.SingleOrDefault(i => i.Id.Equals(id));
+        }
+        public T Create(T item)
         {
             try
             {
-                _context.Add(user);
+                dataset.Add(item);
                 _context.SaveChanges();
+                return item;
             }
             catch (Exception)
             {
 
                 throw;
             }
-            return user;
         }
-
-        public User Update(User user)
+        public T Update(T item)
         {
-            if (!Exists(user.Id)) return null;
-
-            var result = _context.Users.SingleOrDefault(u => u.Id.Equals(user.Id));
+            var result = dataset.SingleOrDefault(i => i.Id.Equals(i));
             if (result != null)
             {
                 try
                 {
-                    _context.Entry(result).CurrentValues.SetValues(user);
+                    _context.Entry(result).CurrentValues.SetValues(item);
+                    _context.SaveChanges();
+                    return result;
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            } else {
+                return null;
+            }
+        }
+        public void Delete(long id)
+        {
+            var result = dataset.SingleOrDefault(i => i.Id.Equals(i));
+            if (result != null)
+            {
+                try
+                {
+                    dataset.Remove(result);
                     _context.SaveChanges();
                 }
                 catch (Exception)
                 {
-
-                    throw;
-                }
-            }
-            return user;
-        }
-
-        public void Delete(long id)
-        {
-            var result = _context.Users.SingleOrDefault(u => u.Id.Equals(id));
-            if (result != null)
-            {
-                try
-                {
-                    _context.Users.Remove(result);
-                    _context.SaveChanges();
-                }
-                catch (Exception ex)
-                {
-
                     throw;
                 }
             }
         }
-
         public bool Exists(long id)
         {
-            return _context.Users.Any(u => u.Id.Equals(id));
+            throw new NotImplementedException();
         }
     }
 }

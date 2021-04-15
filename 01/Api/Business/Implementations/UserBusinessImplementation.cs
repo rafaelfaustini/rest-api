@@ -9,9 +9,9 @@ namespace Api.Business.Implementations
 {
     public class UserBusinessImplementation : IUserBusiness
     {
-        private readonly IUserRepository _repository;
+        private readonly IRepository<User> _repository;
 
-        public UserBusinessImplementation(IUserRepository repository)
+        public UserBusinessImplementation(IRepository<User> repository)
         {
             _repository = repository;
         }

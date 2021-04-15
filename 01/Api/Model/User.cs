@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Api.Model.Base;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -7,11 +8,8 @@ using System.Threading.Tasks;
 namespace Api.Model
 {
     [Table("USER")]
-    public class User
+    public class User : BaseEntity
     {
-        [Column("ID")]
-        public long Id { get; set; }
-
         [Column("USERNAME")]
         public string Username { get; set; }
 
