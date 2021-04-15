@@ -17,12 +17,12 @@ namespace Api.Repository.Implementations
         }
         public List<User> FindAll()
         {
-            return _context.User.ToList();
+            return _context.Users.ToList();
         }
 
         public User FindByID(long id)
         {
-            return _context.User.SingleOrDefault(u => u.Id.Equals(id));
+            return _context.Users.SingleOrDefault(u => u.Id.Equals(id));
         }
         public User Create(User user)
         {
@@ -43,7 +43,7 @@ namespace Api.Repository.Implementations
         {
             if (!Exists(user.Id)) return null;
 
-            var result = _context.User.SingleOrDefault(u => u.Id.Equals(user.Id));
+            var result = _context.Users.SingleOrDefault(u => u.Id.Equals(user.Id));
             if (result != null)
             {
                 try
@@ -62,12 +62,12 @@ namespace Api.Repository.Implementations
 
         public void Delete(long id)
         {
-            var result = _context.User.SingleOrDefault(u => u.Id.Equals(id));
+            var result = _context.Users.SingleOrDefault(u => u.Id.Equals(id));
             if (result != null)
             {
                 try
                 {
-                    _context.User.Remove(result);
+                    _context.Users.Remove(result);
                     _context.SaveChanges();
                 }
                 catch (Exception ex)
@@ -80,7 +80,7 @@ namespace Api.Repository.Implementations
 
         public bool Exists(long id)
         {
-            return _context.User.Any(u => u.Id.Equals(id));
+            return _context.Users.Any(u => u.Id.Equals(id));
         }
     }
 }
