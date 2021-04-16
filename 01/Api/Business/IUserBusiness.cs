@@ -1,14 +1,14 @@
-﻿using Api.Model;
+﻿using Api.Data.Converter;
 using System.Collections.Generic;
 
 namespace Api.Business
 {
     public interface IUserBusiness
     {
-        User Create(User user);
-        User FindByID(long id);
-        List<User> FindAll();
-        User Update(User user);
+        UserVO Create(UserVO user);
+        UserVO FindByID(long id);
+        List<UserVO> FindAll();
+        UserVO Update(UserVO user);
         void Delete(long id);
     }
 }

@@ -46,7 +46,7 @@ namespace Api.Repository.Generic
         }
         public T Update(T item)
         {
-            var result = dataset.SingleOrDefault(i => i.Id.Equals(i));
+            var result = dataset.SingleOrDefault(i => i.Id.Equals(item.Id));
             if (result != null)
             {
                 try
@@ -65,7 +65,7 @@ namespace Api.Repository.Generic
         }
         public void Delete(long id)
         {
-            var result = dataset.SingleOrDefault(i => i.Id.Equals(i));
+            var result = dataset.SingleOrDefault(i => i.Id.Equals(id));
             if (result != null)
             {
                 try

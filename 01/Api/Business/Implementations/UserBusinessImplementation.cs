@@ -1,9 +1,8 @@
-﻿using Api.Model;
+﻿using Api.Data.Converter;
+using Api.Data.Converter.Implementations;
+using Api.Model;
 using Api.Repository;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Api.Business.Implementations
 {
@@ -11,27 +10,34 @@ namespace Api.Business.Implementations
     {
         private readonly IRepository<User> _repository;
 
+        private readonly UserConverter _converter;
+
         public UserBusinessImplementation(IRepository<User> repository)
         {
             _repository = repository;
+            _converter = new UserConverter();
         }
-        public List<User> FindAll()
+        public List<UserVO> FindAll()
         {
-            return _repository.FindAll();
-        }
-
-        public User FindByID(long id)
-        {
-            return _repository.FindByID(id);
-        }
-        public User Create(User user)
-        {
-            return _repository.Create(user);
+            return _converter.Parse(_repository.FindAll());
         }
 
-        public User Update(User user)
+        public UserVO FindByID(long id)
         {
-            return _repository.Update(user);
+            return _converter.Parse(_repository.FindByID(id));
+        }
+        public UserVO Create(UserVO user)
+        {
+            var userEntity = _converter.Parse(user);
+            userEntity = _repository.Create(userEntity);
+            return _converter.Parse(userEntity);
+        }
+
+        public UserVO Update(UserVO user)
+        {
+            var userEntity = _converter.Parse(user);
+            userEntity = _repository.Update(userEntity);
+            return _converter.Parse(userEntity);
         }
 
         public void Delete(long id)

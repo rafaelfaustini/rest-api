@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Api.Data.Converter;
 
 namespace Api.Controllers
 {
@@ -37,13 +38,13 @@ namespace Api.Controllers
             return Ok(user);
         }
         [HttpPost]
-        public IActionResult Post([FromBody] User user)
+        public IActionResult Post([FromBody] UserVO user)
         {
             if (user == null) return BadRequest();
             return Ok(_userBusiness.Create(user));
         }
         [HttpPut]
-        public IActionResult Put([FromBody] User user)
+        public IActionResult Put([FromBody] UserVO user)
         {
             if (user == null) return BadRequest();
             return Ok(_userBusiness.Update(user));
