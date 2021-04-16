@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using Serilog;
 using Api.Repository.Generic;
+using Microsoft.Net.Http.Headers;
 
 namespace Api
 {
@@ -41,6 +42,15 @@ namespace Api
             {
                 MigrateDatabase(connection);
             }
+
+            services.AddMvc(options =>
+            {
+                options.RespectBrowserAcceptHeader = true;
+                options.FormatterMappings.SetMediaTypeMappingForFormat("xml", MediaTypeHeaderValue.Parse("application/xml"));
+                options.FormatterMappings.SetMediaTypeMappingForFormat("json", MediaTypeHeaderValue.Parse("application/json"));
+            })
+                .AddXmlSerializerFormatters();
+
             services.AddApiVersioning();
 
             services.AddScoped<IUserBusiness, UserBusinessImplementation>(); // Dependency
