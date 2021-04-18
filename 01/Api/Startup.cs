@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using Serilog;
 using Api.Repository.Generic;
 using Microsoft.Net.Http.Headers;
+using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Rewrite;
 
 namespace Api
 {
@@ -53,6 +55,22 @@ namespace Api
 
             services.AddApiVersioning();
 
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1",
+                    new OpenApiInfo
+                    {
+                        Title = "API WITH .NET 5",
+                        Version = "v1",
+                        Description = "",
+                        Contact = new OpenApiContact
+                        {
+                            Name = "Rafael Faustini",
+                            Url = new Uri("https://rafaelfaustini.com")
+                        }
+                    });
+            });
+
             services.AddScoped<IUserBusiness, UserBusinessImplementation>(); // Dependency
             services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
 
@@ -69,6 +87,16 @@ namespace Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c => {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "API WITH .NET 5 - V1");
+            });
+
+            var option = new RewriteOptions();
+            option.AddRedirect("^$", "swagger");
+            app.UseRewriter(option);
 
             app.UseAuthorization();
 

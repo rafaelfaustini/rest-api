@@ -1,11 +1,7 @@
-﻿using Api.Model;
-using Api.Business;
+﻿using Api.Business;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Api.Data.Converter;
 
 namespace Api.Controllers
@@ -26,11 +22,19 @@ namespace Api.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType((200), Type = typeof(List<UserVO>))]
+        [ProducesResponseType((204))]
+        [ProducesResponseType((400))]
+        [ProducesResponseType((401))]
+
         public IActionResult Get()
         {
             return Ok(_userBusiness.FindAll());
         }
         [HttpGet("{id}")]
+        [ProducesResponseType((200), Type = typeof(UserVO))]
+        [ProducesResponseType((400))]
+        [ProducesResponseType((401))]
         public IActionResult Get(long id)
         {
             var user = _userBusiness.FindByID(id);
@@ -38,18 +42,28 @@ namespace Api.Controllers
             return Ok(user);
         }
         [HttpPost]
+        [ProducesResponseType((200), Type = typeof(UserVO))]
+        [ProducesResponseType((400))]
+        [ProducesResponseType((401))]
         public IActionResult Post([FromBody] UserVO user)
         {
             if (user == null) return BadRequest();
             return Ok(_userBusiness.Create(user));
         }
         [HttpPut]
+        [ProducesResponseType((200), Type = typeof(List<UserVO>))]
+        [ProducesResponseType((204))]
+        [ProducesResponseType((400))]
+        [ProducesResponseType((401))]
         public IActionResult Put([FromBody] UserVO user)
         {
             if (user == null) return BadRequest();
             return Ok(_userBusiness.Update(user));
         }
         [HttpDelete("{id}")]
+        [ProducesResponseType((204))]
+        [ProducesResponseType((400))]
+        [ProducesResponseType((401))]
         public IActionResult Delete(long id)
         {
             _userBusiness.Delete(id);
