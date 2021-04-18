@@ -71,7 +71,7 @@ Travis CI was used to automate the docker image upload on the DockerHub, but it 
 ## Swagger
 
 ![](img/swagger_screenshot.png)<br>
-[Swagger](https://swagger.io/ | width=100) is an awesome tool to help documenting the api in an easier way, it is integrated with the project. It shows the routes, the possible response HTTP Codes and also gives the possibility to test the API using it's own interface.
+[Swagger](https://swagger.io/) is an awesome tool to help documenting the api in an easier way, it is integrated with the project. It shows the routes, the possible response HTTP Codes and also gives the possibility to test the API using it's own interface.
 
 # Application Setup
 
