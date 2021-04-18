@@ -11,14 +11,13 @@ script:
   - docker-compose build
 before_deploy:
   - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
-  deploy:
-    provider: script
-    script:
-      docker tag api:latest $DOCKER_USERNAME/rest-api:$TRAVIS_JOB_ID;
-      docker tag api-db:latest $DOCKER_USERNAME/rest-api-db:$TRAVIS_JOB_ID;
-      docker push $DOCKER_USERNAME/rest-api:$TRAVIS_JOB_ID;
-      docker push $DOCKER_USERNAME/rest-api-db:$TRAVIS_JOB_ID;
-    on:
-      branch: main
+deploy:
+  provider: script
+  script: docker tag api:latest $DOCKER_USERNAME/rest-api:$TRAVIS_JOB_ID;
+    docker tag api-db:latest $DOCKER_USERNAME/rest-api-db:$TRAVIS_JOB_ID;
+    docker push $DOCKER_USERNAME/rest-api:$TRAVIS_JOB_ID;
+    docker push $DOCKER_USERNAME/rest-api-db:$TRAVIS_JOB_ID;
+  on:
+    branch: main
 notifications:
   email: false
