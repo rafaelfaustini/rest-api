@@ -1,13 +1,10 @@
 ﻿using Api.Model.Base;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Api.Model
 {
-    [Table("USER")]
+    [Table("USERS")]
     public class User : BaseEntity
     {
         [Column("USERNAME")]
@@ -23,6 +20,12 @@ namespace Api.Model
         public string DisplayName { get; set; }
 
         [Column("CREATED")]
-        public DateTime CreatedDate { get; set; }
+        public DateTime? CreatedDate { get; set; }
+
+        [Column("REFRESH_TOKEN")]
+        public string RefreshToken { get; set; }
+
+        [Column("REFRESH_TOKEN_EXPIRY_TIME")]
+        public DateTime? RefreshTokenExpiryTime { get; set; }
     }
 }

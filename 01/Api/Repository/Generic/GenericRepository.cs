@@ -81,7 +81,7 @@ namespace Api.Repository.Generic
         }
         public bool Exists(long id)
         {
-            throw new NotImplementedException();
+            return dataset.Any(i => i.Id.Equals(id));
         }
     }
 }
