@@ -75,12 +75,17 @@ Travis CI was used to automate the docker image upload on the DockerHub, but it 
 
 # Application Setup
 
-First pull the images from the docker hub by running on your terminal (Needs docker installed)
+Make sure you have docker installed and run the following commands in the powershell/bash <br>
+`
+docker run -p 1434:1433 --name <ContainerName> rafaelfaustini/rest-api
+`
+<br> and <br>
+`
+docker run -p 1434:1433 --name <ContainerName> rafaelfaustini/rest-api-db
+`
+<br>
 
-```
-docker pull rafaelfaustini/rest-api-db
-docker pull rafaelfaustini/rest-api
-```
+In this command you can replace the `1434` with the port you want to run and also name the container as you like by changing `<ContainerName>` to the name you wish.
 
 With the containers running, access you can easily access with your browser
 http://localhost:44399
